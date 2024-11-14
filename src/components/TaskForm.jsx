@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box, Select, MenuItem } from '@mui/material';
+import { TextField, Button, Box, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 
 const TaskForm = ({ setTasks }) => {
   const [title, setTitle] = useState('');
@@ -10,8 +10,8 @@ const TaskForm = ({ setTasks }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setTasks((prevTasks) => [
-      ...prevTasks,
-      { id: Date.now(), title, description, dueDate, priority, completed: false },
+        { id: Date.now(), title, description, dueDate, priority, completed: false },
+        ...prevTasks,
     ]);
     setTitle('');
     setDescription('');
@@ -20,7 +20,7 @@ const TaskForm = ({ setTasks }) => {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ mb: 2 }}>
+    <Box component="form" onSubmit={handleSubmit} sx={{ mb: 3 }}>
       <TextField
         label="Title"
         fullWidth
@@ -47,17 +47,18 @@ const TaskForm = ({ setTasks }) => {
         onChange={(e) => setDueDate(e.target.value)}
         sx={{ mb: 2 }}
       />
-      <Select
-        label="Priority"
-        fullWidth
-        value={priority}
-        onChange={(e) => setPriority(e.target.value)}
-        sx={{ mb: 2 }}
-      >
-        <MenuItem value="High">High</MenuItem>
-        <MenuItem value="Medium">Medium</MenuItem>
-        <MenuItem value="Low">Low</MenuItem>
-      </Select>
+      <FormControl fullWidth sx={{ mb: 2 }}>
+        <InputLabel>Priority</InputLabel>
+        <Select
+          value={priority}
+          onChange={(e) => setPriority(e.target.value)}
+          label="Priority"
+        >
+          <MenuItem value="High">High</MenuItem>
+          <MenuItem value="Medium">Medium</MenuItem>
+          <MenuItem value="Low">Low</MenuItem>
+        </Select>
+      </FormControl>
       <Button type="submit" variant="contained" color="primary">Add Task</Button>
     </Box>
   );
