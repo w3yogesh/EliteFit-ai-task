@@ -1,70 +1,89 @@
-# Getting Started with Create React App
+## Overview
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The **Task Management Application** is a web-based platform designed to help users organize and track their tasks. Built using **React**, this application offers a clean and intuitive user interface for managing tasks efficiently. Users can create new tasks, edit existing ones, and delete tasks when they are completed.
 
-## Available Scripts
+[Live](https://elitefit-ai-task.onrender.com/)
 
-In the project directory, you can run:
+### Screenshots
+Home 
+![screencapture-elitefit-ai-task-onrender-2024-11-15-12_50_15](https://github.com/user-attachments/assets/88ec9341-a5a8-4da1-883a-35b106b3e454)
 
-### `npm start`
+Add Task
+![screencapture-elitefit-ai-task-onrender-2024-11-15-12_51_32](https://github.com/user-attachments/assets/eda8c599-93ea-4da4-9566-e17e08164e44)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Status Filter
+![screencapture-elitefit-ai-task-onrender-2024-11-15-12_51_21](https://github.com/user-attachments/assets/6961c773-dbbc-4c30-8cb4-ec561345ae01)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Priority Filter
+![screencapture-elitefit-ai-task-onrender-2024-11-15-12_51_10](https://github.com/user-attachments/assets/fa473398-5c9a-4d17-908e-cd821c6eae51)
 
-### `npm test`
+Search Filter
+![screencapture-elitefit-ai-task-onrender-2024-11-15-12_50_43](https://github.com/user-attachments/assets/5eae7691-082b-4550-9bdb-36273e8063ef)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Upcoming overdue and completed filter
+![screencapture-elitefit-ai-task-onrender-2024-11-15-12_55_20](https://github.com/user-attachments/assets/253a2acb-4634-487a-897d-5cc38f07ffdb)
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Key features of the app include:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Task Filters**: Users can filter tasks by status (e.g., completed, pending) and priority (e.g., High, Medium, Low).
+- **Priority Management**: Users can assign priority levels to tasks for better organization.
+- **Persistent Data**: The application utilizes **local storage** to store task data, ensuring that it persists across browser sessions.
+- **Task Dashboard**: The dashboard displays tasks grouped by status (upcoming, overdue, completed) to help users quickly assess their to-do list.
 
-### `npm run eject`
+The application is designed to be simple and user-friendly, making it easy for anyone to start managing their tasks right away. Whether you need to organize work tasks, personal projects, or other responsibilities, this app helps you stay on top of things.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Setup Instructions
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Follow the steps below to set up the **Task Management Application** on your local machine.
 
-## Learn More
+### Prerequisites
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Before you begin, ensure you have the following installed:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Node.js**: Version 14 or higher. You can download it from [here](https://nodejs.org/).
+- **npm**: Node package manager comes with Node.js, but you can install it separately if needed.
 
-### Code Splitting
+### Clone the Repository
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. Open a terminal window and run the following command to clone the repository:
 
-### Analyzing the Bundle Size
+   ```bash
+   git clone https://github.com/w3yogesh/EliteFit-ai-task.git
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+   ```
 
-### Making a Progressive Web App
+2. Navigate to the project directory:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+  ```bash
+  cd task-management-app
 
-### Advanced Configuration
+  ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+3. Install Dependencies
+  ```bash
+    npm install
+  ```
 
-### Deployment
+4. Start the Application
+  ```bash
+    npm start
+  ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Running the App
+Open your browser and visit http://localhost:3000 to view the Task Management Application in action. You should see the task dashboard, where you can manage your tasks.
 
-### `npm run build` fails to minify
+### Local Storage
+The application uses local storage to persist task data. This means that your tasks will remain saved even after you refresh the page or close and reopen the browser.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Additional Information
+Languages and Tools Used:
+React for the front-end framework
+JavaScript (ES2023) for programming logic
+CSS for styling the UI
+Folder Structure:
+src/: Contains all React components and logic.
+public/: Static files like images and the index.html file.
