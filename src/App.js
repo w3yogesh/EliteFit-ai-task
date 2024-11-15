@@ -14,8 +14,10 @@ import {
   Drawer,
   IconButton,
   Modal,
+  Divider,
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import AddIcon from "@mui/icons-material/Add";
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
@@ -26,139 +28,136 @@ const App = () => {
   const [editingTask, setEditingTask] = useState(null);
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
 
-  // Load tasks from localStorage with error handling and debugging
   useEffect(() => {
     const storedTasks = localStorage.getItem("tasks");
-
     if (storedTasks) {
       try {
         const parsedTasks = JSON.parse(storedTasks);
-
-        if (Array.isArray(parsedTasks)) {
-          console.log("Loaded tasks from localStorage:", parsedTasks);
-          setTasks(parsedTasks);
-        } else {
-          console.error("Stored tasks are not in the correct format.");
-          setTasks([]);
-        }
+        setTasks(Array.isArray(parsedTasks) ? parsedTasks : []);
       } catch (error) {
         console.error("Failed to parse tasks from localStorage:", error);
         setTasks([]);
       }
-    } else {
-      console.log("No tasks found in localStorage");
-      setTasks([]);
     }
   }, []);
 
-  // Save tasks to localStorage whenever `tasks` state changes
   useEffect(() => {
     if (tasks.length > 0) {
       localStorage.setItem("tasks", JSON.stringify(tasks));
-      console.log("Saved tasks to localStorage:", tasks);
     }
   }, [tasks]);
 
   const addTask = (task) => {
     const newTask = { ...task, id: Date.now(), status: "Pending" };
-    console.log("Adding new task:", newTask);
-
-    setTasks((prevTasks) => [...prevTasks, newTask]);
+    console.log(newTask);
+    setTasks((prevTasks) => {
+      const updatedTasks = [...prevTasks, newTask];
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+      return updatedTasks;
+    });
     setShowForm(false);
   };
 
   const updateTask = (updatedTask) => {
-    console.log("Updating task:", updatedTask);
-
     setTasks((prevTasks) =>
       prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
     );
-    setEditingTask(null);
     setShowForm(false);
+    setEditingTask(null);
   };
 
   const deleteTask = (id) => {
-    console.log("Deleting task with id:", id);
-
-    setTasks((prevTasks) => {
-      const updatedTasks = prevTasks.filter((task) => task.id !== id);
-      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-      console.log("Updated tasks after deletion:", updatedTasks);
-      return updatedTasks;
-    });
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(updatedTasks);
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   };
 
   return (
-    <Box sx={{ minHeight: "100vh", bgcolor: "grey.100" }}>
-      {/* Header Section */}
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Task Management
+    <Box sx={{ minHeight: "100vh", bgcolor: "#f0f4f8" }}>
+      <AppBar position="sticky" sx={{ bgcolor: "#1A202C", boxShadow: 2 }}>
+        <Toolbar sx={{ maxWidth: "1200px", width: "100%", margin: "0 auto" }}>
+          <Typography variant="h5" sx={{ flexGrow: 1, color: "#E2E8F0" }}>
+            Task Manager
           </Typography>
+          <IconButton
+            color="inherit"
+            onClick={() => setShowForm(true)}
+            sx={{ display: { xs: "none", sm: "inline-block" } }}
+          >
+            <AddIcon /> Add Task
+          </IconButton>
         </Toolbar>
       </AppBar>
 
       <Container maxWidth="lg" sx={{ py: 6 }}>
-        {/* Controls Section */}
-        <Box sx={{ display: "flex", alignItems: "center", mb: 4 }}>
-          {/* Search Bar */}
-          <Box sx={{ flexGrow: 1 }}>
-            <SearchBar
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-            />
-          </Box>
-
-          {/* Filter and Add Button */}
-          <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
-            {/* Filter Button (Mobile) */}
-            <IconButton
-              onClick={() => setIsFilterMenuOpen(!isFilterMenuOpen)}
-              sx={{ display: { xs: "block", md: "none" } }}
-            >
-              <FilterListIcon />
-            </IconButton>
-
-            {/* Filter Options */}
-            <Drawer
-              anchor="right"
-              open={isFilterMenuOpen}
-              onClose={() => setIsFilterMenuOpen(false)}
-              sx={{ display: { xs: "block", md: "none" } }}
-            >
-              <Box p={2}>
-                <PriorityFilter
-                  priorityFilter={priorityFilter}
-                  setPriorityFilter={setPriorityFilter}
-                />
-                <StatusFilter
-                  statusFilter={statusFilter}
-                  setStatusFilter={setStatusFilter}
-                />
-              </Box>
-            </Drawer>
-
-            <Box sx={{ display: { xs: "none", md: "flex" }, ml: 2 }}>
-              <PriorityFilter
-                priorityFilter={priorityFilter}
-                setPriorityFilter={setPriorityFilter}
-              />
-            </Box>
-
-            {/* Add Task Button */}
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => setShowForm(true)}
-              sx={{ ml: 2 }}
-            >
-              + Add Task
-            </Button>
-          </Box>
+        <Box
+          sx={{ display: "flex", alignItems: "center", mb: 2, width: "100%" }}
+        >
+          <SearchBar
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setShowForm(true)}
+            startIcon={<AddIcon />}
+            sx={{
+              fontWeight: 600,
+              bgcolor: "#4CAF50",
+              ":hover": { bgcolor: "#388E3C" },
+              padding: "8px 16px",
+              borderRadius: 2,
+              minWidth: "15%", 
+              fontSize: "0.875rem", 
+            }}
+          >
+            Add Task
+          </Button>
         </Box>
 
-        {/* Task Form Modal */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            mb: 3,
+            bgcolor: "#ffffff",
+            p: 1,
+            borderRadius: 1,
+            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+            width: "auto",
+          }}
+        >
+          <PriorityFilter
+            priorityFilter={priorityFilter}
+            setPriorityFilter={setPriorityFilter}
+            sx={{ mr: 2 }}
+          />
+          <StatusFilter
+            statusFilter={statusFilter}
+            setStatusFilter={setStatusFilter}
+          />
+        </Box>
+
+        <Drawer
+          anchor="right"
+          open={isFilterMenuOpen}
+          onClose={() => setIsFilterMenuOpen(false)}
+          sx={{ display: { xs: "block", md: "none" } }}
+        >
+          <Box p={3} sx={{ width: 280 }}>
+            <PriorityFilter
+              priorityFilter={priorityFilter}
+              setPriorityFilter={setPriorityFilter}
+            />
+            <Divider sx={{ my: 2 }} />
+            <StatusFilter
+              statusFilter={statusFilter}
+              setStatusFilter={setStatusFilter}
+            />
+          </Box>
+        </Drawer>
+
         <Modal
           open={showForm}
           onClose={() => setShowForm(false)}
@@ -166,14 +165,17 @@ const App = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            backdropFilter: "blur(3px)",
           }}
         >
           <Box
             sx={{
               bgcolor: "background.paper",
               p: 4,
-              borderRadius: 1,
-              boxShadow: 24,
+              borderRadius: 3,
+              boxShadow: 10,
+              width: "90%",
+              maxWidth: 600,
             }}
           >
             <TaskForm
@@ -181,24 +183,32 @@ const App = () => {
               addTask={addTask}
               updateTask={updateTask}
               editingTask={editingTask}
+              setEditingTask={setEditingTask}
               closeForm={() => setShowForm(false)}
             />
           </Box>
         </Modal>
 
-        {/* Task Dashboard */}
-        <Box sx={{ bgcolor: "white", borderRadius: 1, boxShadow: 1 }}>
+        <Box
+          sx={{
+            bgcolor: "#ffffff",
+            borderRadius: 2,
+            boxShadow: 2,
+            p: 3,
+            minHeight: "50vh",
+          }}
+        >
           <TaskDashboard
             tasks={tasks}
             searchQuery={searchQuery}
             priorityFilter={priorityFilter}
             statusFilter={statusFilter}
             deleteTask={deleteTask}
+            updateTask={updateTask}
             setEditingTask={(task) => {
               setEditingTask(task);
               setShowForm(true);
             }}
-            updateTask={updateTask}
           />
         </Box>
       </Container>
